@@ -1,5 +1,5 @@
 <?php
-$dbuser="";
+$dbuser="@localhost";
 $dbpass="";
 $servername="localhost";
 $db="gdavmfzwyf";
