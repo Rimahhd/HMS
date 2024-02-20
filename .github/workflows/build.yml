@@ -1,0 +1,40 @@
+name: Build, Push, and Deploy Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+   
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set version as an environment variable
+      run: echo "VERSION=1.0.${{ github.run_number }}" >> $GITHUB_ENV
+
+    - name: Build App Docker image
+      run: docker build -t rimahhd/rimahhd:${{ env.VERSION }} .
+
+    - name: Build Database Docker image
+      run: docker build -t rimahhd/mysql:${{ env.VERSION }} -f Dockerfile.database .
+
+    - name: Build phpMyAdmin Docker image
+      run: docker build -t rimahhd/php:${{ env.VERSION }} -f Dockerfile.phpmyadmin .
+
+    - name: Log in to Docker
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Push App Docker image
+      run: docker push rimahhd/rimahhd:${{ env.VERSION }}
+
+    - name: Push Database Docker image
+      run: docker push rimahhd/mysql:${{ env.VERSION }}
+
+    - name: Push phpMyAdmin Docker image
+      run: docker push rimahhd/php:${{ env.VERSION }}
