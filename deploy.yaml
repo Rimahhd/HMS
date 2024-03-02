@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rimahhd-web-service
+  name: rimahhdp-web-service
 spec:
   selector:
-    app: rimahhd-web
+    app: rimahhdp-web
   ports:
     - protocol: TCP
       port: 80
@@ -15,20 +15,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rimahhd-web-deployment
+  name: rimahhdp-web-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rimahhd-web
+      app: rimahhdp-web
   template:
     metadata:
       labels:
-        app: rimahhd-web
+        app: rimahhdp-web
     spec:
       containers:
       - name: rimahhd-container
-        image: rimahhd/rimahhd:1.0.52
+        image: rimahhd/rimahhd:1.0.62
         ports:
         - containerPort: 80
 
@@ -36,10 +36,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rimahhd-db-service
+  name: wissam-db-service
 spec:
   selector:
-    app: rimahhd-db
+    app: wissam-db
   ports:
     - protocol: TCP
       port: 3306
@@ -80,26 +80,26 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: rimahhd-db-statefulset
+  name: wissam-db-statefulset
 spec:
   replicas: 1
   serviceName: wissam-db-service
   selector:
     matchLabels:
-      app: rimahhd-db
+      app: wissam-db
   template:
     metadata:
       labels:
-        app: rimahhd-db
+        app: wissam-db
     spec:
       containers:
       - name: mysql-container
-        image: rimahhd/mysql:1.0.27
+        image: rimahhd/mysql:1.0.54
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: root
         - name: MYSQL_DATABASE
-          value: mydatabaserimah
+          value: mydatabasewissam
         - name: MYSQL_USER
           value: myuser
         - name: MYSQL_PASSWORD
@@ -147,12 +147,12 @@ spec:
     spec:
       containers:
       - name: phpmyadmin-container
-        image: rimahhd/php:1.0.27
+        image: rimahhd/php:1.0.54
         ports:
         - containerPort: 80
         env:
         - name: PMA_HOST
-          value: rimah-db-service # Use the service name for MySQL
+          value: wissam-db-service # Use the service name for MySQL
         - name: PMA_USER
           value: myuser
         - name: PMA_PASSWORD
