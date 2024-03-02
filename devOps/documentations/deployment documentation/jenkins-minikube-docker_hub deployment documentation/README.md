@@ -1,1 +1,0 @@
-# jenkins-minikube-docker_hub deployment
