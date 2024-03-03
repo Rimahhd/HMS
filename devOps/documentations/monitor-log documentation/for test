@@ -1,4 +1,0 @@
-$smtp_server = "ssl://smtp.gmail.com";
-$smtp_port = 25;
-$smtp_username = "elie.r.tahchi@gmail.com"; // Replace with your Gmail email address
-$smtp_password = "Labmwlabest?!1?!"; // Replace with your Gmail password
